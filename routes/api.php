@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,14 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'unit'], function(){
+    Route::get('', function(){
+        $index = DB::table('units')->get();
+        return response()->json($index, 200);
+    });
+    Route::post('add', 'ProductController@CreateUnit');
+    Route::post('remove', 'ProductController@DeleteUnit');
+
 });
